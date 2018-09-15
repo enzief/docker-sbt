@@ -1,10 +1,5 @@
 FROM docker:18.06
 
-# docker-compose
-RUN apk add --no-cache py-pip && \
-    pip install docker-compose
-# docker-compose: end
-
 # JRE
 # Copy: from https://github.com/docker-library/openjdk/blob/master/8/jre/alpine/Dockerfile
 ENV LANG C.UTF-8
