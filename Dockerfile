@@ -1,4 +1,33 @@
-FROM openjdk:jre-alpine
+FROM docker:18.06
+
+# docker-compose
+RUN apk add --no-cache py-pip && \
+    pip install docker-compose
+# docker-compose: end
+
+# JRE
+# Copy: from https://github.com/docker-library/openjdk/blob/master/8/jre/alpine/Dockerfile
+ENV LANG C.UTF-8
+
+RUN { \
+		echo '#!/bin/sh'; \
+		echo 'set -e'; \
+		echo; \
+		echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
+	} > /usr/local/bin/docker-java-home \
+	&& chmod +x /usr/local/bin/docker-java-home
+ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk/jre
+ENV PATH $PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
+
+ENV JAVA_VERSION 8u171
+ENV JAVA_ALPINE_VERSION 8.171.11-r0
+
+RUN set -x \
+	&& apk add --no-cache \
+		openjdk8-jre="$JAVA_ALPINE_VERSION" \
+	&& [ "$JAVA_HOME" = "$(docker-java-home)" ]
+
+# Copy: end
 
 ENV SBT_VERSION   1.2.1
 ENV SBT_HOME      /usr/local/sbt
