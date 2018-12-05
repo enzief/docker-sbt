@@ -1,6 +1,6 @@
 FROM openjdk:jre-alpine
 
-ENV SBT_VERSION   1.2.5
+ENV SBT_VERSION   1.2.7
 ENV SBT_HOME      /usr/local/sbt
 ENV PATH          ${PATH}:${SBT_HOME}/bin
 ENV GLIBC_VERSION 2.28-r0
